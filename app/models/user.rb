@@ -6,6 +6,9 @@ class User < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
 
+  has_many :posts
+  has_many :comments
+
   def admin?
     self.role == "admin"
   end
