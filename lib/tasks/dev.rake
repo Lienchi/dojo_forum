@@ -31,6 +31,7 @@ namespace :dev do
 
     30.times do |i|
       Post.create!(
+        title: FFaker::Lorem.phrase,
         content: FFaker::Tweet.body,
         user: User.all.sample
       )
