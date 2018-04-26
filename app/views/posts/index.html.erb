@@ -18,7 +18,7 @@
           <% @posts.each do |post| %>
           <tr>
             <th scope="row"><%= post.replies_count %></th>
-            <td><%= post.title %></td>
+            <td><%= link_to post.title, post_path(post) %></td>
             <td><%= post.created_at %></td>
           </tr>
           <% end %>
