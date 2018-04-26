@@ -4,4 +4,14 @@ Content: <%= @post.content %><br>
 
 <br>
 
+<% if @post.user == current_user %>
+  <%= link_to 'Edit', edit_post_path(@post) %><br>
+  <%= link_to 'Delete', post_path(@post), method: :delete, :data => {confirm:"Are you sure?"} %><br>
+<% else %>
+  Edit<br>
+  Delete<br>
+<% end %>
+
+<br>
+
 <%= link_to 'Back to index', root_path %>
