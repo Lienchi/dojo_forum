@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     resources :comments
   end
 
+  resources :users, only: [:show, :edit, :update]
+
   namespace :admin do
     root "posts#index"
   end
