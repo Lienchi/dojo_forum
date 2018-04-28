@@ -56,28 +56,39 @@ namespace :dev do
       Post.create!(
         title: FFaker::Lorem.phrase,
         content: FFaker::Tweet.body,
-        user: User.all.sample
+        user: User.all.sample,
+        draft: false
       )
     end
     puts "have created fake posts!"
-    puts "now you have #{Post.count} posts data!"
+
+    30.times do |i|
+      Post.create!(
+        title: FFaker::Lorem.phrase,
+        content: FFaker::Tweet.body,
+        user: User.all.sample,
+        draft: true
+      )
+    end
+    puts "have created fake drafts!"
   end
 end
-
 
 namespace :dev do
   task fake_comment: :environment do
     Comment.destroy_all
 
     Post.all.each do |post|
-      3.times do |i|
-        post.comments.create!(
-          content: FFaker::Lorem.paragraph,
-          user: User.all.sample
-        )
+      if post.draft == false
+        3.times do |i|
+          post.comments.create!(
+            content: FFaker::Lorem.paragraph,
+            user: User.all.sample
+          )
+        end
+        post.replies_count = 3
+        post.save
       end
-      post.replies_count = 3
-      post.save
     end
     puts "have created fake comments!"
     puts "now you have #{Comment.count} comments data!"

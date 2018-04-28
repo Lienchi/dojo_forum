@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :comments]
+  before_action :set_user, only: [:show, :edit, :update, :comments, :drafts]
 
   def show
     @posts = @user.posts.page(params[:page]).per(10)
@@ -18,6 +18,12 @@ class UsersController < ApplicationController
 
   def comments
     @comments = @user.comments.page(params[:page]).per(10)
+  end
+
+  def drafts
+    if @user == current_user
+      @drafts = current_user.posts.where(draft: true).page(params[:page]).per(10)
+    end
   end
 
   private
