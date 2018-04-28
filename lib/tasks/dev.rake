@@ -2,9 +2,14 @@ namespace :dev do
   task fake_user: :environment do
     User.destroy_all
 
+    file = File.open("#{Rails.root}/public/avatar/male/user10.jpg")
     User.create!(
-      name: "admin", email: "admin@example.com", password: "12345678", role: "admin"
-      )
+      name: "admin",
+      email: "admin@example.com",
+      password: "12345678",
+      role: "admin",
+      avatar: file
+    )
     puts "Default admin created!"
 
     9.times do |i|
