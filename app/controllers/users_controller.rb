@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_user, only: [:show, :edit, :update, :comments]
 
   def show
+    @posts = @user.posts.page(params[:page]).per(10)
   end
 
   def edit
@@ -13,6 +14,10 @@ class UsersController < ApplicationController
   def update
     @user.update(user_params)
     redirect_to user_path(@user)
+  end
+
+  def comments
+    @comments = @user.comments.page(params[:page]).per(10)
   end
 
   private

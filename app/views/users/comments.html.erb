@@ -31,11 +31,11 @@
 <div class="container">
   <div class="row">
     <ul class="nav nav-tabs">
-      <li role="presentation" class="active">
-        <%= link_to 'My Post' %>
-      </li>
       <li role="presentation">
-        <%= link_to 'My Comment', comments_user_path %>
+        <%= link_to 'My Post', user_path(@user) %>
+      </li>
+      <li role="presentation" class="active">
+        <%= link_to 'My Comment' %>
       </li>
       <li role="presentation">
         <%= link_to 'My Collect' %>
@@ -57,24 +57,24 @@
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th>Replies count</th>
             <th>Title</th>
+            <th>Content</th>
             <th>Created at</th>
           </tr>
         </thead>
         <tbody>
-          <% @posts.each do |post| %>
+          <% @comments.each do |comment| %>
           <tr>
-            <th scope="row"><%= post.replies_count %></th>
-            <td><%= link_to post.title, post_comments_path(post) %></td>
-            <td><%= post.created_at %></td>
+            <td><%= link_to comment.post.title, post_comments_path(comment.post) %></td>
+            <td><%= comment.content %></td>
+            <td><%= comment.created_at %></td>
           </tr>
           <% end %>
         </tbody>
       </table>
 
       <div class="text-center">
-        <%= paginate @posts %>
+        <%= paginate @comments %>
       </div>
 
     </div>
