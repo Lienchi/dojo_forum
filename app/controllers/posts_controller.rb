@@ -4,7 +4,21 @@ class PostsController < ApplicationController
   impressionist :actions => [:show]
 
   def index
-    @posts = Post.page(params[:page]).per(10)
+    public_posts = Post.where(draft: false, permission: "public")
+
+    if current_user
+      friends_posts = Post.where(draft: false, permission: "friends")
+      my_friends_posts = []
+      friends_posts.each do |post|
+        if current_user.friend?(post.user)
+          my_friends_posts.push(post)
+        end
+      end
+
+      @posts = Kaminari.paginate_array(public_posts+my_friends_posts).page(params[:page]).per(10)
+    else
+      @posts = public_posts.page(params[:page]).per(10)
+    end
   end
 
   def new

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_29_080420) do
+ActiveRecord::Schema.define(version: 2018_04_29_133510) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2018_04_29_080420) do
     t.integer "user_id"
     t.integer "replies_count", default: 0
     t.boolean "draft", default: true
+    t.string "permission", default: "friends"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -97,7 +98,7 @@ ActiveRecord::Schema.define(version: 2018_04_29_080420) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
-    t.string "role"
+    t.string "role", default: "normal"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"

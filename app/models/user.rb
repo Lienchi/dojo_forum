@@ -26,7 +26,7 @@ class User < ApplicationRecord
   end
 
   def friend?(user)
-    self.friends.include?(user)
+    self.friends.include?(user) || self.inverse_friends.include?(user)
   end
 
   def inviting?(user)
