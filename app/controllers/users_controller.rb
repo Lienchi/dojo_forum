@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :comments, :drafts, :friends]
+  before_action :set_user, only: [:show, :edit, :update, :comments, :collects, :drafts, :friends]
 
   def show
     @posts = @user.posts.page(params[:page]).per(10)
@@ -18,6 +18,10 @@ class UsersController < ApplicationController
 
   def comments
     @comments = @user.comments.page(params[:page]).per(10)
+  end
+
+  def collects
+    @collects = @user.collected_posts.page(params[:page]).per(10)
   end
 
   def drafts

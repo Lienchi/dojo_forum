@@ -1,5 +1,11 @@
 <h1><%= @post.title %></h1>
 
+<% if @post.collected?(current_user) %>
+  <%= link_to 'Uncollect', uncollect_post_path(@post), method: :post, class: "btn btn-info" %>
+<% else %>
+  <%= link_to 'Collect', collect_post_path(@post), method: :post, class: "btn btn-primary" %>
+<% end %>
+
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">

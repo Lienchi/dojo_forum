@@ -5,11 +5,17 @@ Rails.application.routes.draw do
   root "posts#index"
   resources :posts do
     resources :comments
+
+    member do
+      post :collect
+      post :uncollect
+    end
   end
 
   resources :users, only: [:show, :edit, :update] do
     member do
       get :comments
+      get :collects
       get :drafts
       get :friends
     end

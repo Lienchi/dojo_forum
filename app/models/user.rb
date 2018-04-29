@@ -18,6 +18,9 @@ class User < ApplicationRecord
   has_many :unconfirmed_friendships, -> {where confirmed: false}, class_name: "Friendship", foreign_key: "friend_id", dependent: :destroy
   has_many :unconfirmed_friends, through: :unconfirmed_friendships, source: :user
 
+  has_many :collects, dependent: :destroy
+  has_many :collected_posts, through: :collects, source: :post
+
   def admin?
     self.role == "admin"
   end

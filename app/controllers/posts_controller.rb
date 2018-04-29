@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :collect, :uncollect]
   impressionist :actions => [:show]
 
   def index
@@ -40,6 +40,17 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     redirect_to root_path
+  end
+
+  def collect
+    @post.collects.create!(user: current_user)
+    redirect_back(fallback_location: root_path)
+  end
+
+  def uncollect
+    collects = Collect.where(post: @post, user: current_user)
+    collects.destroy_all
+    redirect_back(fallback_location: root_path)
   end
 
   private
