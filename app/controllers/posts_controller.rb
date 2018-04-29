@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  impressionist :actions => [:show]
 
   def index
     @posts = Post.page(params[:page]).per(10)
@@ -24,6 +25,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    impressionist(@post)
   end
 
   def update
