@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :comments, :drafts]
+  before_action :set_user, only: [:show, :edit, :update, :comments, :drafts, :friends]
 
   def show
     @posts = @user.posts.page(params[:page]).per(10)
@@ -24,6 +24,12 @@ class UsersController < ApplicationController
     if @user == current_user
       @drafts = current_user.posts.where(draft: true).page(params[:page]).per(10)
     end
+  end
+
+  def friends
+    @friends = current_user.friends + current_user.inverse_friends
+    @inviting_friends = current_user.inviting_friends
+    @unconfirmed_friends = current_user.unconfirmed_friends
   end
 
   private

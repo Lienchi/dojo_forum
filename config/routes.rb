@@ -11,6 +11,13 @@ Rails.application.routes.draw do
     member do
       get :comments
       get :drafts
+      get :friends
+    end
+  end
+
+  resources :friendships, only: [:create, :destroy] do
+    member do
+      post :accept
     end
   end
 
