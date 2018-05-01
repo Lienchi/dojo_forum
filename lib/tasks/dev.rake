@@ -86,8 +86,6 @@ namespace :dev do
             user: User.all.sample
           )
         end
-        post.replies_count = 3
-        post.save
       end
     end
     puts "have created fake comments!"

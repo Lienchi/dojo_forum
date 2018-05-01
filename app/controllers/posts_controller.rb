@@ -8,17 +8,31 @@ class PostsController < ApplicationController
 
     if current_user
       friends_posts = Post.where(draft: false, permission: "friends")
-      my_friends_posts = []
+      private_posts = Post.where(draft: false, permission: "private")
+
+      posts_ids = []
+      public_posts.each do |post|
+        posts_ids.push(post.id)
+      end
       friends_posts.each do |post|
         if current_user.friend?(post.user)
-          my_friends_posts.push(post)
+          posts_ids.push(post.id)
+        end
+      end
+      private_posts.each do |post|
+        if post.my_post?
+          posts_ids.push(post.id)
         end
       end
 
-      @posts = Kaminari.paginate_array(public_posts+my_friends_posts).page(params[:page]).per(10)
-    else
-      @posts = public_posts.page(params[:page]).per(10)
+      posts = Post.where(id: posts_ids)
+      @q = posts.ransack(params[:q])
+
+    else #!current_user
+      @q = public_posts.ransack(params[:q])
     end
+
+    @posts = @q.result.order(id: :desc).page(params[:page]).per(20)
   end
 
   def new
@@ -39,6 +53,9 @@ class PostsController < ApplicationController
 
   def show
     impressionist(@post)
+    @viewed_count = @post.impressionist_count
+    @post.update(viewed_count: @viewed_count)
+    @comments = @post.comments.page(params[:page]).per(20)
   end
 
   def update

@@ -12,4 +12,14 @@ class Post < ApplicationRecord
   def collected?(user)
     self.collected_users.include?(user)
   end
+
+  def my_post?
+    self.user == current_user
+  end
+
+  def last_replied_at
+    if !self.comments.empty?
+      return self.comments.order(updated_at: :desc).first.updated_at
+    end
+  end
 end
