@@ -56,6 +56,7 @@ class PostsController < ApplicationController
     @viewed_count = @post.impressionist_count
     @post.update(viewed_count: @viewed_count)
     @comments = @post.comments.page(params[:page]).per(20)
+    @comment = Comment.new
   end
 
   def update

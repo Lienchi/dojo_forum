@@ -62,10 +62,28 @@ Content: <%= @post.content %><br>
     <%= time_ago_in_words(comment.created_at) %> ago
   </h5>
   <p><%= comment.content %></p>
+  <% if current_user.admin? || current_user == comment.user %>
+    <%= link_to 'Edit', edit_post_comment_path(@post, comment) %><br>
+    <%= link_to "Delete", post_comment_path(@post, comment), method: :delete, :data => {confirm:"Are you sure?"} %>
+  <% end %>
 <% end %>
 
 <div class="text-center">
   <%= paginate @comments %>
+</div>
+
+<div class="container">
+  <div class="row">
+   <%= form_for [@post, @comment] do |f| %>
+    <div class="form-group">
+      <%= f.text_area :content, placeholder: "留下評論吧", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.submit class: "btn btn-primary" %>
+      <%= f.button "Cancel", type: :reset, class: "btn btn-default" %>
+    </div>
+  <% end %>
+  </div>
 </div>
 
 <br>
