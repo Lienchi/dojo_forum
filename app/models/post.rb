@@ -16,10 +16,4 @@ class Post < ApplicationRecord
   def my_post?
     self.user == current_user
   end
-
-  def last_replied_at
-    if !self.comments.empty?
-      return self.comments.order(updated_at: :desc).first.updated_at
-    end
-  end
 end

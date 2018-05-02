@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_post, only: [:create, :edit, :update, :destroy]
   before_action :set_comment, only: [:edit, :update, :destroy]
+  after_action :update_last_replied_at, only: [:create, :update, :destroy]
 
   def create
     @comment = @post.comments.build(comment_params)
@@ -44,5 +45,11 @@ class CommentsController < ApplicationController
 
   def set_comment
     @comment = Comment.find(params[:id])
+  end
+
+  def update_last_replied_at
+    if !@post.comments.empty?
+      @post.update(last_replied_at: @post.comments.order(updated_at: :desc).first.updated_at)
+    end
   end
 end

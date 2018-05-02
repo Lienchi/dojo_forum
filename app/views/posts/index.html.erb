@@ -9,9 +9,9 @@
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th><%= sort_link(@q, :replies_count) do %>Replies count<% end %></th>
+            <th><%= sort_link(@q, :replies_count) %></th>
             <th><%= sort_link(@q, :title) %></th>
-            <th>Last replied at</th>
+            <th><%= sort_link(@q, :last_replied_at) %></th>
             <th><%= sort_link(@q, :viewed_count) %></th>
           </tr>
         </thead>
