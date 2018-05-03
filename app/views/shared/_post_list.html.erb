@@ -1,0 +1,28 @@
+<div class="col-md-12">
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th><%= sort_link(@q, :replies_count) %></th>
+        <th><%= sort_link(@q, :title) %></th>
+        <th><%= sort_link(@q, :last_replied_at) %></th>
+        <th><%= sort_link(@q, :viewed_count) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @posts.each do |post| %>
+      <tr>
+        <th scope="row"><%= post.replies_count %></th>
+        <td><%= link_to post.title, post_path(post) %></td>
+        <td><%= post.last_replied_at %></td>
+        <td><%= post.viewed_count %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="text-center">
+    <%= paginate @posts %>
+  </div>
+
+</div>

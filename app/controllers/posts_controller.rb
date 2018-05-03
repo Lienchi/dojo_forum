@@ -33,6 +33,7 @@ class PostsController < ApplicationController
     end
 
     @posts = @q.result.order(id: :desc).page(params[:page]).per(20)
+    @categories = Category.all
   end
 
   def new

@@ -17,9 +17,16 @@ puts "Default admin created!"
 Category.destroy_all
 
 category_list = [
-  { name: "商業類" },
-  { name: "技術類" },
-  { name: "心理類" }
+  { name: "javascript" },
+  { name: "java" },
+  { name: "c#" },
+  { name: "c++" },
+  { name: "php" },
+  { name: "android" },
+  { name: "python" },
+  { name: "ios" },
+  { name: "html" },
+  { name: "css" }
 ]
 
 category_list.each do |category|

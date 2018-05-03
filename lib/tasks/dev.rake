@@ -92,3 +92,15 @@ namespace :dev do
     puts "now you have #{Comment.count} comments data!"
   end
 end
+
+namespace :dev do
+  task fake_tag: :environment do
+    Post.all.each do |post|
+      Category.all.sample(rand(0..3)).each do |category|
+        Tag.create!(post_id: post.id, category_id: category.id)
+      end
+    end
+    puts "have created fake tags!"
+    puts "now you have #{Tag.count} tags data!"
+  end
+end

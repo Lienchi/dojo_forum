@@ -4,7 +4,9 @@ class Post < ApplicationRecord
 
   belongs_to :user
   has_many :comments, dependent: :destroy
+
   has_many :tags, dependent: :destroy
+  has_many :tagged_categories, through: :tags, source: :category
 
   has_many :collects, dependent: :destroy
   has_many :collected_users, through: :collects, source: :user
