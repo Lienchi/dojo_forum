@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    root "posts#index"
+    root "categories#index"
     resources :categories
     resources :users
   end
