@@ -20,6 +20,7 @@ namespace :dev do
         name: user_name,
         email: "user#{i}@example.com",
         password: "12345678",
+        role: "normal",
         intro: FFaker::Lorem::sentence(30),
         avatar: file
       )
@@ -36,6 +37,7 @@ namespace :dev do
         name: user_name,
         email: "user#{i+9}@example.com",
         password: "12345678",
+        role: "normal",
         intro: FFaker::Lorem::sentence(30),
         avatar: file
       )
@@ -46,9 +48,6 @@ namespace :dev do
     puts "now you have #{User.count} users data"
   end
 
-end
-
-namespace :dev do
   task fake_post: :environment do
     Post.destroy_all
 
@@ -72,9 +71,7 @@ namespace :dev do
     end
     puts "have created fake drafts!"
   end
-end
 
-namespace :dev do
   task fake_comment: :environment do
     Comment.destroy_all
 
@@ -91,9 +88,7 @@ namespace :dev do
     puts "have created fake comments!"
     puts "now you have #{Comment.count} comments data!"
   end
-end
 
-namespace :dev do
   task fake_tag: :environment do
     Post.all.each do |post|
       Category.all.sample(rand(0..3)).each do |category|
@@ -102,5 +97,13 @@ namespace :dev do
     end
     puts "have created fake tags!"
     puts "now you have #{Tag.count} tags data!"
+  end
+
+  task set_role: :environment do
+    User.all.each do |user|
+      if user.role == nil
+        user.update(role: "normal")
+      end
+    end
   end
 end
