@@ -4,34 +4,29 @@ class PostsController < ApplicationController
   impressionist :actions => [:show]
 
   def index
-    public_posts = Post.where(draft: false, permission: "public")
-
-    if current_user
-      friends_posts = Post.where(draft: false, permission: "friends")
-      private_posts = Post.where(draft: false, permission: "private")
-
-      posts_ids = []
-      public_posts.each do |post|
-        posts_ids.push(post.id)
-      end
-      friends_posts.each do |post|
-        if current_user.friend?(post.user) || current_user == post.user
-          posts_ids.push(post.id)
-        end
-      end
-      private_posts.each do |post|
-        if post.my_post?
-          posts_ids.push(post.id)
-        end
-      end
-
-      posts = Post.where(id: posts_ids)
-      @q = posts.ransack(params[:q])
-
-    else #!current_user
-      @q = public_posts.ransack(params[:q])
+    if params[:category_id]
+      @category = Category.find(params[:category_id])
+      public_posts = @category.tagged_posts.where(draft: false, permission: "public")
+    else
+      public_posts = Post.where(draft: false, permission: "public")
     end
 
+    friends_posts = []
+    private_posts = []
+    if current_user
+      if params[:category_id]
+        friends_posts = @category.tagged_posts.where(draft: false, permission: "friends")
+        private_posts = @category.tagged_posts.where(draft: false, permission: "private")
+      else
+        friends_posts = Post.where(draft: false, permission: "friends")
+        private_posts = Post.where(draft: false, permission: "private")
+      end
+    end
+
+    posts_ids = get_posts_ids(public_posts, friends_posts, private_posts)
+    posts = Post.where(id: posts_ids)
+    @q = posts.ransack(params[:q])
+    
     @posts = @q.result.order(id: :asc).page(params[:page]).per(20)
     @categories = Category.all
   end
@@ -43,7 +38,15 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user = current_user
+
+    if params[:commit] == "Submit"
+      @post.draft = false
+    end
+
     if @post.save
+      tagged_category_ids = @post.tagged_category_ids.split(",")
+      Tag.create!(post_id: @post, category_id: tagged_category_ids)
+
       flash[:notice] = "post was successfully created"
       redirect_to root_path
     else
@@ -93,6 +96,25 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :content)
+    params.require(:post).permit(:title, :content, :permission, :tagged_category_ids=>[])
+  end
+
+  def get_posts_ids(public_posts, friends_posts, private_posts)
+    posts_ids = []
+    public_posts.each do |post|
+      posts_ids.push(post.id)
+    end
+    friends_posts.each do |post|
+      if current_user.friend?(post.user) || current_user == post.user
+        posts_ids.push(post.id)
+      end
+    end
+    private_posts.each do |post|
+      if post.my_post?
+        posts_ids.push(post.id)
+      end
+    end
+
+    return posts_ids
   end
 end

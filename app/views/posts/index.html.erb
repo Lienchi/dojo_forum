@@ -1,9 +1,13 @@
 <div class="container">
 
   <ul class="nav nav-pills nav-pills-center">
-    <li role="presentation" class="active"><%= link_to "ALL", root_path %></li>
+    <li role="presentation" class="<%= "active" if !@category %>">
+      <%= link_to "ALL", root_path %>
+    </li>
     <% @categories.each do |category| %>
-      <li><%= link_to category.name, category_path(category) %></li>
+      <li role="presentation" class="<%= "active" if category == @category %>">
+        <%= link_to category.name, posts_path(category_id: category.id) %>
+      </li>
     <% end %>
   </ul>
 
