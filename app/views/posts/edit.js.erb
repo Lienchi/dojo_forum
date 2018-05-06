@@ -1,0 +1,3 @@
+<% html = j(render :partial => "shared/post_form", :locals => {:post => @post}) %>
+var post = $("#post-content-<%= @post.id %>");
+$(post).html("<%= html %>")

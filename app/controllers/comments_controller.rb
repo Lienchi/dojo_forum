@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      redirect_to post_path(@post)
+      #redirect_to post_path(@post)
       flash[:notice] = "comment was successfully updated"
     else
       render :edit

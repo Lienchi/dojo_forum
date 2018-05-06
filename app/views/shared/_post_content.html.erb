@@ -1,0 +1,17 @@
+<div id="post-content-<%= @post.id %>">
+  <%= @post.content %>
+  <br>
+
+  <% if @post.user == current_user %>
+    <%= link_to edit_post_path(@post), remote: true do %>
+      <span>Edit</span>
+    <% end %>
+    <br>
+  <% end %>
+  <% if current_user.admin? || @post.user == current_user %>
+    <%= link_to 'Delete', post_path(@post), method: :delete, :data => {confirm:"Are you sure?"} %><br>
+  <% else %>
+    Edit<br>
+    Delete<br>
+  <% end %>
+</div>

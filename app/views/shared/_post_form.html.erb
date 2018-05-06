@@ -8,12 +8,7 @@
   <hr>
 <% end %>
 
-<%= form_for @post do |f| %>
-  <%= f.label :title, "Title" %>
-  <%= f.text_field :title %>
-
-  <%= f.label :content, "Content" %>
+<%= form_for @post, {remote: true} do |f| %>
   <%= f.text_area :content %>
-
-  <%= f.submit %>
+  <%= f.submit "Update" %>
 <% end %>

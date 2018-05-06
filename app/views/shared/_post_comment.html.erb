@@ -1,0 +1,13 @@
+<div id="post-comment-<%= comment.id %>">
+  <h5>
+    <%= comment.user.name %>
+    <%= time_ago_in_words(comment.created_at) %> ago
+  </h5>
+  <p><%= comment.content %></p>
+  <% if current_user.admin? || current_user == comment.user %>
+    <%= link_to edit_post_comment_path(@post, comment), remote: true do %>
+      <span>Edit</span>
+    <% end %>
+    <%= link_to "Delete", post_comment_path(@post, comment), method: :delete, :data => {confirm:"Are you sure?"} %>
+  <% end %>
+</div>

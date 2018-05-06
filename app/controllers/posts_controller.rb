@@ -15,7 +15,7 @@ class PostsController < ApplicationController
         posts_ids.push(post.id)
       end
       friends_posts.each do |post|
-        if current_user.friend?(post.user)
+        if current_user.friend?(post.user) || current_user == post.user
           posts_ids.push(post.id)
         end
       end
@@ -32,7 +32,7 @@ class PostsController < ApplicationController
       @q = public_posts.ransack(params[:q])
     end
 
-    @posts = @q.result.order(id: :desc).page(params[:page]).per(20)
+    @posts = @q.result.order(id: :asc).page(params[:page]).per(20)
     @categories = Category.all
   end
 
@@ -62,7 +62,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to post_path(@post)
+      #redirect_to post_path(@post)
       flash[:notice] = "post was successfully updated"
     else
       render :edit

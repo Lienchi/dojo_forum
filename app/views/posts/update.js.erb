@@ -1,0 +1,2 @@
+<% html = j(render :partial => "shared/post_content", :locals => {:post => @post}) %>
+$("#post-content-<%= @post.id %>").html("<%= html %>")
