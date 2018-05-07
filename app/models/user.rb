@@ -6,8 +6,8 @@ class User < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
 
-  has_many :posts
-  has_many :comments
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   has_many :friendships, -> {where confirmed: true}, dependent: :destroy
   has_many :friends, through: :friendships

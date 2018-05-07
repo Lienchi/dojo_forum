@@ -106,4 +106,10 @@ namespace :dev do
       end
     end
   end
+
+  task update_user_replies_count: :environment do
+    User.all.each do |user|
+      User.update_counters user.id, :replies_count => user.comments.count
+    end
+  end
 end

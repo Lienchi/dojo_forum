@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :feeds, only: [:index]
+
   resources :users, only: [:show, :edit, :update] do
     member do
       get :comments

@@ -1,0 +1,27 @@
+<div class="col-md-12">
+
+  User: <%= @users_count %><br>
+  Post: <%= @posts_count %><br>
+  Comment: <%= @comments_count %><br>
+
+  <h3>Chatterbox</h3>
+  <ul>
+    <% @chatterbox.each do |chatter| %>
+      <li>
+        <%= chatter.name %>
+        <%= chatter.replies_count %>
+      </li>
+    <% end %>
+  </ul>
+
+  <br>
+  <h3>Most Popular Post</h3>
+  <ul>
+    <% @popular_posts.each do |post| %>
+      <li>
+        <%= post.title %>
+      </li>
+    <% end %>
+  </ul>
+
+</div>
