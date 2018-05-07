@@ -3,7 +3,7 @@
   <br>
 
   <% if @post.user == current_user %>
-    <%= link_to edit_post_path(@post), remote: true do %>
+    <%= link_to edit_post_path(@post) do %>
       <span>Edit</span>
     <% end %>
     <br>

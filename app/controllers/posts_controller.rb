@@ -64,8 +64,13 @@ class PostsController < ApplicationController
   end
 
   def update
+    if params[:commit] == "Submit"
+      @post.draft = false
+    else
+      @post.draft = true
+    end
     if @post.update(post_params)
-      #redirect_to post_path(@post)
+      redirect_to post_path(@post)
       flash[:notice] = "post was successfully updated"
     else
       render :edit

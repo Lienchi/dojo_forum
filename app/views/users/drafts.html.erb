@@ -70,7 +70,7 @@
         <tbody>
           <% @drafts.each do |draft| %>
           <tr>
-            <td><%= draft.title %></td>
+            <td><%= link_to draft.title, post_path(draft) %></td>
             <td><%= draft.content %></td>
             <td><%= draft.created_at %></td>
           </tr>

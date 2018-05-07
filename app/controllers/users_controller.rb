@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :comments, :collects, :drafts, :friends]
 
   def show
-    @posts = @user.posts.page(params[:page]).per(10)
+    @posts = @user.posts.where(draft: false).page(params[:page]).per(10)
   end
 
   def edit
