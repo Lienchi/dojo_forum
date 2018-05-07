@@ -11,7 +11,7 @@
         </div>
 
         <div class="col-md-9 col-sm-8">
-          <h2><%= @user.name %></h2>
+          <h2><%= link_to @user.name, user_path(@user) %></h2>
           <p><strong><%= @user.email %></strong></p>
           <div><%= simple_format @user.intro %></div>
           <% if @user.email == current_user.email %>
@@ -40,9 +40,11 @@
       <li role="presentation">
         <%= link_to 'My Collect', collects_user_path %>
       </li>
-      <li role="presentation">
-        <%= link_to 'My Draft', drafts_user_path %>
-      </li>
+      <% if @user == current_user %>
+        <li role="presentation">
+          <%= link_to 'My Draft', drafts_user_path %>
+        </li>
+      <% end %>
       <li role="presentation" class="active">
         <%= link_to 'My Friend', friends_user_path %>
       </li>
@@ -57,7 +59,7 @@
 
       My Friends:
       <% @friends.each do |friend| %>
-        <p><strong><%= friend.name %></strong></p>
+        <p><strong><%= link_to friend.name, user_path(friend) %></strong></p>
         <p><strong><%= friend.email %></strong></p>
         <p><strong><%= simple_format friend.intro %></strong></p>
         <br>
@@ -75,7 +77,7 @@
 
       Inviting:
       <% @inviting_friends.each do |friend| %>
-        <p><strong><%= friend.name %></strong></p>
+        <p><strong><%= link_to friend.name, user_path(friend) %></strong></p>
         <p><strong><%= friend.email %></strong></p>
         <p><strong><%= simple_format friend.intro %></strong></p>
         <br>
@@ -95,7 +97,7 @@
 
       Add me:
       <% @unconfirmed_friends.each do |friend| %>
-        <p><strong><%= friend.name %></strong></p>
+        <p><strong><%= link_to friend.name, user_path(friend) %></strong></p>
         <p><strong><%= friend.email %></strong></p>
         <p><strong><%= simple_format friend.intro %></strong></p>
         <%= link_to 'Accept', accept_friendship_path(friend), method: :post, class: "btn btn-primary" %>

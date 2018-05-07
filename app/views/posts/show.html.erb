@@ -1,10 +1,15 @@
 <h1><%= @post.title %></h1>
 
 <% if @post.collected?(current_user) %>
-  <%= link_to 'Uncollect', uncollect_post_path(@post), method: :post, class: "btn btn-info" %>
+  <div id="post-id-<%= @post.id %>">
+    <%= link_to 'Uncollect', uncollect_post_path(@post), remote: true, method: :post, class: "btn btn-info" %>
+  </div>
 <% else %>
-  <%= link_to 'Collect', collect_post_path(@post), method: :post, class: "btn btn-primary" %>
+  <div id="post-id-<%= @post.id %>">
+    <%= link_to 'Collect', collect_post_path(@post), remote: true, method: :post, class: "btn btn-primary" %>
+  </div>
 <% end %>
+
 
 <div class="container">
   <div class="row">
@@ -19,7 +24,7 @@
         </div>
 
         <div class="col-md-9 col-sm-8">
-          <h2><%= @post.user.name %></h2>
+          <h2><%= link_to @post.user.name, user_path(@post.user) %></h2>
           <% if @post.user != current_user %>
             <% if current_user.inviting?(@post.user) %>
               <%= link_to 'Inviting ...', class: "btn btn-primary" %>

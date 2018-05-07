@@ -18,7 +18,7 @@ Content: <%= @post.content %><br>
 
 <% @comments.each do |comment| %>
   <h5>
-    <%= comment.user.name %>
+    <%= link_to comment.user.name, user_path(comment.user) %>
     <%= time_ago_in_words(comment.created_at) %> ago
   </h5>
   <p><%= comment.content %></p>

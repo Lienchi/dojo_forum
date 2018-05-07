@@ -26,7 +26,7 @@ class PostsController < ApplicationController
     posts_ids = get_posts_ids(public_posts, friends_posts, private_posts)
     posts = Post.where(id: posts_ids)
     @q = posts.ransack(params[:q])
-    
+
     @posts = @q.result.order(id: :asc).page(params[:page]).per(20)
     @categories = Category.all
   end
@@ -80,16 +80,18 @@ class PostsController < ApplicationController
 
   def collect
     @post.collects.create!(user: current_user)
-    redirect_back(fallback_location: root_path)
   end
 
   def uncollect
     collects = Collect.where(post: @post, user: current_user)
     collects.destroy_all
-    redirect_back(fallback_location: root_path)
   end
 
+
+
+
   private
+
 
   def set_post
     @post = Post.find(params[:id])

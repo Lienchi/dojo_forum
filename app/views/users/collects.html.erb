@@ -11,7 +11,7 @@
         </div>
 
         <div class="col-md-9 col-sm-8">
-          <h2><%= @user.name %></h2>
+          <h2><%= link_to @user.name, user_path(@user) %></h2>
           <p><strong><%= @user.email %></strong></p>
           <div><%= simple_format @user.intro %></div>
           <% if @user.email == current_user.email %>
@@ -40,9 +40,11 @@
       <li role="presentation" class="active">
         <%= link_to 'My Collect'%>
       </li>
-      <li role="presentation">
-        <%= link_to 'My Draft', drafts_user_path %>
-      </li>
+      <% if @user == current_user %>
+        <li role="presentation">
+          <%= link_to 'My Draft', drafts_user_path %>
+        </li>
+      <% end %>
       <li role="presentation">
         <%= link_to 'My Friend', friends_user_path %>
       </li>
@@ -68,7 +70,7 @@
         <tbody>
           <% @collects.each do |collect| %>
           <tr>
-            <td><%= collect.title %></td>
+            <td><%= link_to collect.title, post_path(collect) %></td>
             <td><%= collect.content %></td>
             <td><%= collect.created_at %></td>
           </tr>
