@@ -2,6 +2,8 @@ class Post < ApplicationRecord
   validates_presence_of :title, :content
   is_impressionable
 
+  mount_uploader :image, PhotoUploader
+
   belongs_to :user
   has_many :comments, dependent: :destroy
 

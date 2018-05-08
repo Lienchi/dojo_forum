@@ -15,13 +15,17 @@
   <%= f.label :content, "Content" %>
   <%= f.text_area :content %>
   <br>
-  Permission:
+  <%= f.label :image, "Photo" %>
+  <%= image_tag @post.image.url, width: '300px' if @post.image? %>
+  <%= f.file_field :image %>
+  <br>
+  Who Can See:
   <%= f.radio_button(:permission, "public") %>
-  <%= f.label "Public" %>
+  <%= f.label "All" %>
   <%= f.radio_button(:permission, "friends") %>
-  <%= f.label "Friends" %>
+  <%= f.label "Friend" %>
   <%= f.radio_button(:permission, "private") %>
-  <%= f.label "Private" %>
+  <%= f.label "Myself" %>
   <br>
   Category: <%= f.collection_check_boxes(:tagged_category_ids, Category.all, :id, :name) %>
   <br><br>

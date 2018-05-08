@@ -1,4 +1,5 @@
 <div id="post-content-<%= @post.id %>">
+  <%= image_tag @post.image.url, width: '600px' if @post.image? %>
   <%= @post.content %>
   <br>
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_07_152345) do
+ActiveRecord::Schema.define(version: 2018_05_08_152016) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2018_05_07_152345) do
     t.string "permission", default: "friends"
     t.integer "viewed_count", default: 0
     t.datetime "last_replied_at"
+    t.string "image"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
