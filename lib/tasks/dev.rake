@@ -49,6 +49,12 @@ namespace :dev do
   end
 
   task fake_post: :environment do
+    post_permission_list = [
+      "public",
+      "friends",
+      "private"
+    ]
+
     Post.destroy_all
 
     30.times do |i|
@@ -56,7 +62,8 @@ namespace :dev do
         title: FFaker::Lorem.phrase,
         content: FFaker::Tweet.body,
         user: User.all.sample,
-        draft: false
+        draft: false,
+        permission: post_permission_list.sample
       )
     end
     puts "have created fake posts!"
