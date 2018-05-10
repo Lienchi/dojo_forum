@@ -1,13 +1,36 @@
-<div id="post-comment-<%= comment.id %>">
-  <h5>
+<div class="col-md-4 col-lg-3">
+  <div class="col-md-4 col-sm-4">
+    <div class="text-center">
+      <%= image_tag comment.user.avatar.url, class: "img-responsive img-rounded" %>
+    </div>
+  </div>
+
+  <div class="col-md-12 col-sm-8">
     <%= link_to comment.user.name, user_path(comment.user) %>
-    <%= time_ago_in_words(comment.created_at) %> ago
-  </h5>
-  <p><%= comment.content %></p>
-  <% if current_user.admin? || current_user == comment.user %>
-    <%= link_to edit_post_comment_path(@post, comment), remote: true do %>
-      <span>Edit</span>
+    <% if comment.user != current_user %>
+      <% if current_user.inviting?(comment.user) %>
+        <%= link_to 'Inviting ...', class: "btn btn-primary" %>
+      <% elsif current_user.friend?(comment.user) %>
+        <%= link_to 'Friend', class: "btn btn-primary" %>
+      <% else %>
+        <%= link_to 'Add Friend', friendships_path(friend_id: comment.user), method: :post, class: "btn btn-primary" %>
+      <% end %>
     <% end %>
-    <%= link_to "Delete", post_comment_path(@post, comment), method: :delete, :data => {confirm:"Are you sure?"} %>
-  <% end %>
+  </div>
+</div>
+
+<div class="col-md-8 col-lg-9">
+  <div id="post-comment-<%= comment.id %>">
+    <h5>
+      <%= link_to comment.user.name, user_path(comment.user) %>
+    </h5>
+    <%= time_ago_in_words(comment.created_at) %> ago
+    <p><%= comment.content %></p>
+    <% if current_user.admin? || current_user == comment.user %>
+      <%= link_to edit_post_comment_path(@post, comment), remote: true do %>
+        <span>Edit</span>
+      <% end %>
+      <%= link_to "Delete", post_comment_path(@post, comment), method: :delete, :data => {confirm:"Are you sure?"} %>
+    <% end %>
+  </div>
 </div>

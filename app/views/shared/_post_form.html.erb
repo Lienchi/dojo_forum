@@ -8,27 +8,62 @@
   <hr>
 <% end %>
 
-<%= form_for @post do |f| %>
-  <%= f.label :title, "Title" %>
-  <%= f.text_field :title %>
-  <br>
-  <%= f.label :content, "Content" %>
-  <%= f.text_area :content %>
-  <br>
-  <%= f.label :image, "Photo" %>
-  <%= image_tag @post.image.url, width: '300px' if @post.image? %>
-  <%= f.file_field :image %>
-  <br>
-  Who Can See:
-  <%= f.radio_button(:permission, "public") %>
-  <%= f.label "All" %>
-  <%= f.radio_button(:permission, "friends") %>
-  <%= f.label "Friend" %>
-  <%= f.radio_button(:permission, "private") %>
-  <%= f.label "Myself" %>
-  <br>
-  Category: <%= f.collection_check_boxes(:tagged_category_ids, Category.all, :id, :name) %>
-  <br><br>
-  <%= f.submit "Save Draft" %>
-  <%= f.submit "Submit" %>
+<%= form_for @post, :html => {:class => "form-horizontal"} do |f| %>
+  <div class="form-group">
+    <%= f.label :title, "Title", class: "col-sm-2 control-label" %>
+    <div class="col-sm-4">
+      <%= f.text_field :title, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :content, "Content", class: "col-sm-2 control-label" %>
+    <div class="col-sm-4">
+      <%= f.text_area :content, class: "form-control", rows: "5" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :image, "Photo", class: "col-sm-2 control-label" %>
+    <%= image_tag @post.image.url, class: "col-sm-4", width: '300px' if @post.image? %>
+    <%= f.file_field :image, class: "col-sm-4" %>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">
+      Who Can See
+    </label>
+    <div class="col-sm-4">
+      <label class="radio-inline">
+        <%= f.radio_button(:permission, "public") %>All
+      </label>
+      <label class="radio-inline">
+        <%= f.radio_button(:permission, "friends") %>Friend
+      </label>
+      <label class="radio-inline">
+        <%= f.radio_button(:permission, "private") %>Myself
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">
+      Category
+    </label>
+    <div class="col-sm-4">
+      <%= f.collection_check_boxes :tagged_category_ids, Category.all, :id, :name do |category| %>
+        <label class="checkbox-inline">
+          <%= category.check_box %>
+          <%= category.label %>
+        </label>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit "Save Draft", class: "btn btn-warning" %>
+      <%= f.submit "Submit", class: "btn btn-primary" %>
+    </div>
+  </div>
 <% end %>
