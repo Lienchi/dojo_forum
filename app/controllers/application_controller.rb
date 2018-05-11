@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-
+  
   private
 
   def authenticate_admin
