@@ -18,6 +18,10 @@ class Post < ApplicationRecord
   end
 
   def my_post?
-    self.user == current_user
+    if current_user
+      self.user == current_user
+    else
+      return false
+    end
   end
 end

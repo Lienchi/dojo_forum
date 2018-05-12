@@ -14,9 +14,11 @@ class ApplicationController < ActionController::Base
     public_posts.each do |post|
       posts_ids.push(post.id)
     end
-    friends_posts.each do |post|
-      if current_user.friend?(post.user) || current_user == post.user
-        posts_ids.push(post.id)
+    if current_user
+      friends_posts.each do |post|
+        if current_user.friend?(post.user) || current_user == post.user
+          posts_ids.push(post.id)
+        end
       end
     end
     private_posts.each do |post|
