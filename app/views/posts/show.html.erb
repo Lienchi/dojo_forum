@@ -23,7 +23,9 @@
   
         <div class="media-left text-center col-md-2">
           <div>
-            <p><%= image_tag @post.user.avatar.url, class: "img-responsive img-rounded" %></p>
+            <% if @post.user.avatar.url %>
+              <p><%= image_tag @post.user.avatar.url, class: "img-responsive img-rounded" %></p>
+            <% end %>
             <p><%= link_to @post.user.name, user_path(@post.user) %></p>
           </div>
           <div>

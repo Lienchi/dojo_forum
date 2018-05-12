@@ -5,7 +5,9 @@
 
         <div class="col-md-3 col-sm-4">
           <div class="text-center">
-            <%= image_tag @user.avatar.url, class: "img-responsive img-rounded" %>
+            <% if @user.avatar.url %>
+              <%= image_tag @user.avatar.url, class: "img-responsive img-rounded" %>
+            <% end %>
           </div>
         </div>
 

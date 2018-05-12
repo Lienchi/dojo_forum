@@ -3,7 +3,9 @@
 
     <div class="media-left text-center col-md-2">
       <div>
-        <p><%= image_tag comment.user.avatar.url, class: "img-responsive img-rounded" %></p>
+        <% if comment.user.avatar.url %>
+          <p><%= image_tag comment.user.avatar.url, class: "img-responsive img-rounded" %></p>
+        <% end %>
         <p><%= link_to comment.user.name, user_path(comment.user) %></p>
       </div>
       <div>
