@@ -1,4 +1,5 @@
 class Api::V1::PostsController < ApiController
+  protect_from_forgery prepend: true
   before_action :authenticate_user!, except: :index
   
   def index
@@ -19,6 +20,7 @@ class Api::V1::PostsController < ApiController
 
   def create
     @post = Post.new(post_params)
+    @post.user = current_user
     if @post.save
       render json: {
         message: "Photo created successfully!",
@@ -57,6 +59,6 @@ class Api::V1::PostsController < ApiController
   private
 
   def post_params
-    params.permit(:title, :content, :permission, :image, :tagged_category_ids=>[])
+    params.permit(:title, :content, :permission, :draft, :image, :tagged_category_ids=>[])
   end
 end
