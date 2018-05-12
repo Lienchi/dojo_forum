@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
       end
     end
     private_posts.each do |post|
-      if self.user == current_user
+      if post.user == current_user
         posts_ids.push(post.id)
       end
     end
