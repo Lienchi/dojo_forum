@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   before_create :generate_authentication_token
-  after_create :set_user_name
+  after_create :set_user_name, :set_user_avatar
 
   mount_uploader :avatar, AvatarUploader
 
@@ -44,6 +44,13 @@ class User < ApplicationRecord
     if !self.name
       user_name = self.email.split("@").first
       self.update(name: user_name)
+    end
+  end
+
+  def set_user_avatar
+    if !self.avatar
+      default_user_image = File.open("#{Rails.root}/public/avatar/default-user-image.png")
+      self.update(avatar: default_user_image)
     end
   end
 end
