@@ -1,2 +1,2 @@
-<% html = j(render :partial => "shared/post_comment", :locals => {:comment => @comment}) %>
+<% html = j(render :partial => "shared/post_comment_body", :locals => {:comment => @comment}) %>
 $("#post-comment-<%= @comment.id %>").html("<%= html %>")

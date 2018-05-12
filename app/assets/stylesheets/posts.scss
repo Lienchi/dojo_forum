@@ -10,3 +10,22 @@
   float: none;
   display: inline-block;
 }
+
+.post-content-item {
+  border-style: solid;
+  border-width: thin;
+  padding: 5px;
+}
+
+.post-comment-item {
+  border-style: solid;
+  border-top: 0px;
+  border-width: thin;
+  padding: 5px;
+}
+
+.post-title {
+  margin: 0px;
+  padding: 5px;
+  background: red;
+}

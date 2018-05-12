@@ -1,6 +1,9 @@
 <div class="container-fluid">
-  <div class="col-sm-4"><%= @post.title %></div>
-
+  <div class="col-sm-4 col-md-offset-1 pull-left"><h4><%= @post.title %></h4></div>
+  
+  <div class="col-sm-1 pull-right">
+    <a href="#comment" class="btn btn-primary">Comment</a>
+  </div>
   <div class="col-sm-1 pull-right" id="post-id-<%= @post.id %>">
     <% if @post.collected?(current_user) %>
       <%= link_to 'Uncollect', uncollect_post_path(@post), remote: true, method: :post, class: "btn btn-info" %>
@@ -10,64 +13,76 @@
   </div>
 </div>
 
+<br>
 
 <div class="container">
   <div class="row">
 
-    <div class="col-md-4  col-lg-3">
-      <div class="col-md-4 col-sm-4">
-        <div class="text-center">
-          <%= image_tag @post.user.avatar.url, class: "img-responsive img-rounded" %>
+    <div class="col-md-10 col-md-offset-1 post-content-item">
+      <div class="media">
+  
+        <div class="media-left text-center col-md-2">
+          <div>
+            <p><%= image_tag @post.user.avatar.url, class: "img-responsive img-rounded" %></p>
+            <p><%= link_to @post.user.name, user_path(@post.user) %></p>
+          </div>
+          <div>
+            <% if @post.user != current_user %>
+              <% if current_user.inviting?(@post.user) %>
+                <span class="btn btn-success btn-md">Inviting...</span>
+              <% elsif current_user.friend?(@post.user) %>
+                <span class="btn btn-info btn-md">Friend</span>
+              <% else %>
+                <%= link_to 'Add Friend', friendships_path(friend_id: @post.user), method: :post, class: "btn btn-primary" %>
+              <% end %>
+            <% end %>
+          </div>
         </div>
+
+        <div class="media-body">
+          <%= render partial: "shared/post_content", :locals => {:post => @post} %>
+        </div>
+
       </div>
 
-      <div class="col-md-12 col-sm-8">
-        <%= link_to @post.user.name, user_path(@post.user) %>
-        <% if @post.user != current_user %>
-          <% if current_user.inviting?(@post.user) %>
-            <%= link_to 'Inviting ...', class: "btn btn-primary" %>
-          <% elsif current_user.friend?(@post.user) %>
-            <%= link_to 'Friend', class: "btn btn-primary" %>
-          <% else %>
-            <%= link_to 'Add Friend', friendships_path(friend_id: @post.user), method: :post, class: "btn btn-primary" %>
+      <div class="pull-right">
+        <% if @post.user == current_user %>
+          <%= link_to edit_post_path(@post) do %>
+            <span class="glyphicon glyphicon-pencil btn btn-info btn-md"></span>
+          <% end %>
+        <% end %>
+        <% if current_user.admin? || @post.user == current_user %>
+          <%= link_to post_path(@post), method: :delete, :data => {confirm:"Are you sure?"} do %>
+            <span class="glyphicon glyphicon-remove btn btn-danger btn-md"></span>
           <% end %>
         <% end %>
       </div>
     </div>
 
-    <div class="col-md-8  col-lg-9">
-      <h3>Content</h3>
-      <%= render partial: "shared/post_content", :locals => {:post => @post} %>
-    </div>
-  </div>
-</div>
-
-
-<div class="container">
-  <div class="row">
-
     <% @comments.each do |comment| %>
       <%= render partial: "shared/post_comment", :locals => {:comment => comment} %>
     <% end %>
 
-    <div class="text-center">
-      <%= paginate @comments %>
-    </div>
-
   </div>
 </div>
 
-<div class="container">
+<br>
+
+<div class="text-center">
+  <%= paginate @comments %>
+</div>
+
+<div class="container" id="comment">
   <div class="row">
-    <%= form_for [@post, @comment] do |f| %>
+    <%= form_for [@post, @comment], :html => {:class => "form-horizontal"} do |f| %>
       <div class="form-group">
-        <div class="col-sm-8">
-          <%= f.text_area :content, placeholder: "留下評論吧", class: "form-control", rows: "5" %>
+        <div class="col-md-10 col-md-offset-1 col-sm-8">
+          <%= f.text_area :content, placeholder: "comment...", class: "form-control", rows: "5" %>
         </div>
       </div>
 
       <div class="form-group">
-        <div class="col-sm-10">
+        <div class="col-md-10 col-md-offset-1 col-sm-10">
           <%= f.submit "Submit", class: "btn btn-primary" %>
         </div>
       </div>

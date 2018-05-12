@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>DojoForum</title>
+    <title>Dojo Forum</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,14 +10,13 @@
   </head>
 
   <body>
+    <!-- 導覽列 -->
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-
-    <!-- 導覽列 -->
-    <nav class="navbar navbar-default navbar-fixed-top"">
+    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="<%= root_path %>">Site Name</a>
+          <a class="navbar-brand" href="<%= root_path %>">Dojo Forum</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -35,11 +34,10 @@
                 <li><%= link_to('Admin Panel', admin_root_path) %></li>
               <% end %>
               <li><%= link_to('Profile', user_path(current_user)) %></li>
-              <li><%= link_to('登出', destroy_user_session_path, method: :delete) %></li>
-              <li><%= link_to('修改密碼', edit_user_registration_path) %></li>
+              <li><%= link_to('Sign Out', destroy_user_session_path, method: :delete) %></li>
             <% else %>
-              <li><%= link_to('註冊', new_user_registration_path) %></li>
-              <li><%= link_to('登入', new_user_session_path) %></li>
+              <li><%= link_to('Sign Up', new_user_registration_path) %></li>
+              <li><%= link_to('Sign In', new_user_session_path) %></li>
             <% end %>
           </ul>
         </div>

@@ -1,0 +1,52 @@
+<div class="container-fluid profile-container-fluid">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+
+
+        <div class="col-md-3 col-sm-4">
+          <div class="text-center">
+            <%= image_tag @user.avatar.url, class: "img-responsive img-rounded" %>
+          </div>
+        </div>
+
+        <div class="col-md-9 col-sm-8">
+          <h2><%= link_to @user.name, user_path(@user) %></h2>
+          <p><strong><%= @user.email %></strong></p>
+          <div><%= simple_format @user.intro %></div>
+          <% if current_user %>
+            <% if @user.email == current_user.email %>
+              <%= link_to 'Edit Profile', edit_user_path(@user), class: "btn btn-primary" %>
+            <% end %>
+          <% end %>
+        </div>
+
+
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="container">
+  <div class="row">
+    <ul class="nav nav-tabs">
+      <li role="presentation" class="<%= "active" if current_page?(user_path(@user)) %>">
+        <%= link_to 'My Post', user_path(@user) %>
+      </li>
+      <li role="presentation" class="<%= "active" if current_page?(comments_user_path) %>">
+        <%= link_to 'My Comment', comments_user_path %>
+      </li>
+      <li role="presentation" class="<%= "active" if current_page?(collects_user_path) %>">
+        <%= link_to 'My Collect', collects_user_path%>
+      </li>
+      <% if @user == current_user %>
+        <li role="presentation" class="<%= "active" if current_page?(drafts_user_path) %>">
+          <%= link_to 'My Draft', drafts_user_path %>
+        </li>
+      <% end %>
+      <li role="presentation" class="<%= "active" if current_page?(friends_user_path) %>">
+        <%= link_to 'My Friend', friends_user_path %>
+      </li>
+    </ul>
+  </div>
+</div>

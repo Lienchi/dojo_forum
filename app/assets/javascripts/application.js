@@ -16,3 +16,9 @@
 //= require_tree .
 //= require jquery
 //= require bootstrap-sprockets
+
+jQuery(function($){
+  $("tr[data-link]").click(function(){
+    window.location = this.dataset.link
+  });
+})

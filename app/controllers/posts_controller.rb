@@ -48,7 +48,11 @@ class PostsController < ApplicationController
       Tag.create!(post_id: @post, category_id: tagged_category_ids)
 
       flash[:notice] = "post was successfully created"
-      redirect_to root_path
+      if params[:commit] == "Submit"
+        redirect_to root_path
+      else
+        redirect_to drafts_user_path(current_user)
+      end
     else
       flash[:alert] = "post was failed to create"
       render :new
@@ -90,6 +94,9 @@ class PostsController < ApplicationController
   def uncollect
     collects = Collect.where(post: @post, user: current_user)
     collects.destroy_all
+    if params[:path] == "user_collects"
+      redirect_back(fallback_location: root_path)
+    end
   end
 
 

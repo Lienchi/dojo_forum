@@ -18,7 +18,7 @@
       <tr>
         <td>
           <% if user.avatar.url %>
-            <%= image_tag user.avatar.url %>
+            <%= image_tag user.avatar.url, class: "img-responsive img-rounded" %>
           <% end %>
         </td>
         <td><%= link_to user.name, user_path(user) %></td>

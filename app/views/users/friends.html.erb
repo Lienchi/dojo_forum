@@ -1,111 +1,63 @@
-<div class="container">
+<%= render partial: "shared/profile" %>
+
+<div class="container-fluid friend-inviting text-center">
   <div class="row">
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-10">
+      
+      <h4>Waiting for response</h4>
 
-      <div class="page-header">
-
-        <div class="col-md-3 col-sm-4">
-          <div class="text-center">
-            <%= image_tag @user.avatar.url, class: "img-responsive img-rounded" %>
+      <% @inviting_friends.each do |friend| %>
+        <div class="col-sm-4 col-md-2">
+          <%= image_tag friend.avatar.url, class: "img-responsive img-rounded" %>
+          <div class="caption">
+            <h4><%= link_to friend.name, user_path(friend) %></h4>
           </div>
         </div>
-
-        <div class="col-md-9 col-sm-8">
-          <h2><%= link_to @user.name, user_path(@user) %></h2>
-          <p><strong><%= @user.email %></strong></p>
-          <div><%= simple_format @user.intro %></div>
-          <% if @user.email == current_user.email %>
-            <%= link_to 'Edit Profile', edit_user_path(@user), class: "btn btn-primary" %>
-          <% end %>
-        </div>
-        <div class="clearfix"></div>
-
-      </div>
-
-      <br>
-
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <div class="row">
-    <ul class="nav nav-tabs">
-      <li role="presentation">
-        <%= link_to 'My Post', user_path(@user) %>
-      </li>
-      <li role="presentation">
-        <%= link_to 'My Comment', comments_user_path %>
-      </li>
-      <li role="presentation">
-        <%= link_to 'My Collect', collects_user_path %>
-      </li>
-      <% if @user == current_user %>
-        <li role="presentation">
-          <%= link_to 'My Draft', drafts_user_path %>
-        </li>
-      <% end %>
-      <li role="presentation" class="active">
-        <%= link_to 'My Friend', friends_user_path %>
-      </li>
-    </ul>
-  </div>
-</div>
-
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-
-      My Friends:
-      <% @friends.each do |friend| %>
-        <p><strong><%= link_to friend.name, user_path(friend) %></strong></p>
-        <p><strong><%= friend.email %></strong></p>
-        <p><strong><%= simple_format friend.intro %></strong></p>
-        <br>
       <% end %>
 
     </div>
   </div>
 </div>
 
-<hr>
 
-<div class="container">
+
+<div class="container-fluid friend-add-me text-center">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-10">
 
-      Inviting:
-      <% @inviting_friends.each do |friend| %>
-        <p><strong><%= link_to friend.name, user_path(friend) %></strong></p>
-        <p><strong><%= friend.email %></strong></p>
-        <p><strong><%= simple_format friend.intro %></strong></p>
-        <br>
-      <% end %>
+      <h4>Adding me</h4>
 
-    </div>
-  </div>
-</div>
-
-<hr>
-
-<div class="container">
-
-  <div class="row">
-
-    <div class="col-md-12">
-
-      Add me:
       <% @unconfirmed_friends.each do |friend| %>
-        <p><strong><%= link_to friend.name, user_path(friend) %></strong></p>
-        <p><strong><%= friend.email %></strong></p>
-        <p><strong><%= simple_format friend.intro %></strong></p>
-        <%= link_to 'Accept', accept_friendship_path(friend), method: :post, class: "btn btn-primary" %>
-        <%= link_to 'Ignore', friendship_path(friend), method: :delete, class: "btn btn-primary" %>
-        <br>
+        <div class="col-sm-4 col-md-2">
+          <%= image_tag friend.avatar.url, class: "img-responsive img-rounded" %>
+          <div class="caption">
+            <h4><%= link_to friend.name, user_path(friend) %></h4>
+            <%= link_to 'Accept', accept_friendship_path(friend), method: :post, class: "btn btn-primary" %>
+            <%= link_to 'Ignore', friendship_path(friend), method: :delete, class: "btn btn-danger" %>
+          </div>
+        </div>
       <% end %>
 
     </div>
+  </div>
+</div>
 
+
+<div class="container-fluid friend-mine text-center">
+  <div class="row">
+    <div class="col-md-10">
+      
+      <h4>My Friends</h4>
+
+      <% @friends.each do |friend| %>
+        <div class="col-sm-4 col-md-2">
+          <%= image_tag friend.avatar.url, class: "img-responsive img-rounded" %>
+          <div class="caption">
+            <h4><%= link_to friend.name, user_path(friend) %></h4>
+          </div>
+        </div>
+      <% end %>
+
+    </div>
   </div>
 </div>

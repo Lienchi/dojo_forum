@@ -1,4 +1,6 @@
 class FeedsController < ApplicationController
+  before_action :authenticate_user!
+  
   def index
     @users_count = User.count
     @posts_count = Post.count

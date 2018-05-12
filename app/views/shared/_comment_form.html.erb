@@ -8,7 +8,9 @@
   <hr>
 <% end %>
 
+<div class="col-md-10">
 <%= form_for [@post, @comment], {remote: true} do |f| %>
-  <%= f.text_area :content %>
-  <%= f.submit "Update" %>
+  <p><%= f.text_area :content, class: "form-control", rows: "5" %></p>
+  <p><%= f.submit "Update", class: "btn btn-primary" %></p>
 <% end %>
+</div>

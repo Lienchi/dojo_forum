@@ -1,18 +1,4 @@
 <div id="post-content-<%= @post.id %>">
-  <%= image_tag @post.image.url, width: '600px' if @post.image? %>
-  <%= @post.content %>
-  <br>
-
-  <% if @post.user == current_user %>
-    <%= link_to edit_post_path(@post) do %>
-      <span>Edit</span>
-    <% end %>
-    <br>
-  <% end %>
-  <% if current_user.admin? || @post.user == current_user %>
-    <%= link_to 'Delete', post_path(@post), method: :delete, :data => {confirm:"Are you sure?"} %><br>
-  <% else %>
-    Edit<br>
-    Delete<br>
-  <% end %>
+  <%= image_tag @post.image.url, width: '400px' if @post.image? %>
+  <p><%= @post.content %></p>
 </div>
