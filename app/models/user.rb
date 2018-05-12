@@ -48,7 +48,7 @@ class User < ApplicationRecord
   end
 
   def set_user_avatar
-    if !self.avatar
+    if !self.avatar.url
       default_user_image = File.open("#{Rails.root}/public/avatar/default-user-image.png")
       self.update(avatar: default_user_image)
     end
