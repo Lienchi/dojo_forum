@@ -90,6 +90,7 @@ namespace :dev do
             user: User.all.sample
           )
         end
+        post.update(last_replied_at: post.comments.order(updated_at: :desc).first.updated_at)
       end
     end
     puts "have created fake comments!"
