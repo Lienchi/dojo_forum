@@ -16,12 +16,4 @@ class Post < ApplicationRecord
   def collected?(user)
     self.collected_users.include?(user)
   end
-
-  def my_post?
-    if current_user
-      self.user == current_user
-    else
-      return false
-    end
-  end
 end
