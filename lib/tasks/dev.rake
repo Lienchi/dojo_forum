@@ -57,7 +57,7 @@ namespace :dev do
 
     Post.destroy_all
 
-    30.times do |i|
+    100.times do |i|
       Post.create!(
         title: FFaker::Lorem.phrase,
         content: FFaker::Tweet.body,
@@ -84,7 +84,7 @@ namespace :dev do
 
     Post.all.each do |post|
       if post.draft == false
-        3.times do |i|
+        5.times do |i|
           post.comments.create!(
             content: FFaker::Lorem.paragraph,
             user: User.all.sample
