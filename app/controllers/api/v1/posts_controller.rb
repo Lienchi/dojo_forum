@@ -6,7 +6,7 @@ class Api::V1::PostsController < ApiController
   end
 
   def show
-    @post = Post.find_by(params[:id])
+    @post = Post.find_by(id: params[:id])
     if !@post
       render json: {
         message: "Can't find the post!",
